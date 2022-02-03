@@ -47,7 +47,9 @@ const Feed: VFC = () => {
           px: 3,
         }}
       >
-        <Typography>Home</Typography>
+        <Typography fontSize={20} fontWeight={800}>
+          Home
+        </Typography>
       </Box>
 
       {posts.map((post) => (
