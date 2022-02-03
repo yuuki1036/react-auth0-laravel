@@ -14,5 +14,5 @@ const mix = require("laravel-mix");
 mix.ts("resources/ts/app.tsx", "public/js");
 
 if (mix.inProduction()) {
-    mix.version();
+  mix.version();
 }
