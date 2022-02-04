@@ -9,6 +9,7 @@ import BookmarkBorder from "@mui/icons-material/BookmarkBorder";
 import ListAlt from "@mui/icons-material/ListAlt";
 import PermIdentity from "@mui/icons-material/PermIdentity";
 import MoreHoriz from "@mui/icons-material/MoreHoriz";
+import Auth from "./Auth";
 
 const Sidebar: VFC = () => {
   return (
@@ -34,27 +35,8 @@ const Sidebar: VFC = () => {
       <SidebarOption Icon={PermIdentity} text="Profile" />
       <SidebarOption Icon={MoreHoriz} text="More" />
 
-      {/* Button -> Tweet */}
-      <Button
-        variant="outlined"
-        fullWidth
-        sx={{
-          backgroundColor: "primary.main",
-          border: "none",
-          color: "white",
-          fontWeight: 900,
-          fontSize: 20,
-          textTransform: "inherit",
-          borderRadius: 30,
-          height: 50,
-          mt: 3,
-          "&:hover": {
-            backgroundColor: "#1b9def",
-          },
-        }}
-      >
-        Tweet
-      </Button>
+      {/* login btn */}
+      <Auth />
     </Box>
   );
 };

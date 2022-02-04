@@ -16,5 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'api'], function () {
-    Route::get('get_posts', [PostController::class, 'getAll']);
+    Route::get('post/get', [PostController::class, 'getAll']);
+    Route::post('post/create', [PostController::class, 'create']);
+    Route::post('post/reload', [PostController::class, 'reload']);
 });

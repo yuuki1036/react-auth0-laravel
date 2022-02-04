@@ -13,13 +13,18 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->name;
       return [
-        "userId"  => $this->faker->numberBetween(1, 100),
-        "userName" => $this->faker->userName(),
-        "content" => $this->faker->realText(20),
+        "userId"  => $this->faker->uuid,
+        "displayName" => $name,
+        "userName" => $name,
+        "emailVerified" => false,
+        "avatar" => "",
         "type" => "tweet",
+        "content" => $this->faker->text,
+        "image" => null,
         "replay"   => 0,
-        "retweet"   => 0, 
+        "retweet"   => 0,
         "likes"   => 0,
         "replayIds" => "{}",
         "retweetIds" => "{}",

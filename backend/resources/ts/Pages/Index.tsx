@@ -1,11 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Feed from "../Components/Feed";
 import Sidebar from "../Components/Sidebar";
 
 const Index = () => {
-  const { isAuthenticated, loginWithRedirect, user, logout } = useAuth0();
   return (
     <Box
       sx={{
@@ -17,15 +16,6 @@ const Index = () => {
         px: 1,
       }}
     >
-      {/* <header className="App-header">
-        {!isAuthenticated ? (
-          <button onClick={loginWithRedirect}>Log in</button>
-        ) : (
-          <button onClick={() => logout({ returnTo: window.location.origin })}>
-            Log out
-          </button>
-        )}
-      </header> */}
       <Sidebar />
       <Feed />
     </Box>

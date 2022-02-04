@@ -15,16 +15,20 @@ class Posts extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
           $table->id();
-          $table->integer('userId');
-          $table->string('userName', 20);
-          $table->string('content', 40);
+          $table->string('userId', 100);
+          $table->string('displayName', 40);
+          $table->string('userName', 40);
+          $table->boolean('emailVerified');
+          $table->text('avatar');
           $table->string('type', 10);
+          $table->string('content', 280);
+          $table->binary('image')->nullable();
           $table->integer('replay');
           $table->integer('retweet');
           $table->integer('likes');
-          $table->text('replayIds');
-          $table->text('retweetIds');
-          $table->text('likesIds');
+          $table->longText('replayIds');
+          $table->longText('retweetIds');
+          $table->longText('likesIds');
           $table->timestamps();
         });
     }
