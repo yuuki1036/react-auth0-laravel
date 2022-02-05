@@ -19,7 +19,7 @@ class Posts extends Migration
           $table->string('displayName', 40);
           $table->string('userName', 40);
           $table->boolean('emailVerified');
-          $table->text('avatar');
+          $table->text('avatar')->nullable();
           $table->string('type', 10);
           $table->string('content', 280);
           $table->binary('image')->nullable();

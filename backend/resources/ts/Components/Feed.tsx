@@ -57,41 +57,43 @@ const Feed: VFC = () => {
     <Box
       sx={{
         flex: 0.4,
-        borderRight: 1,
-        borderRightColor: "secondary.main",
+        p: 0,
         minWidth: "fit-content",
         overflowY: "scroll",
-        "*::-webkit-scrollbar": {
+        "::-webkit-scrollbar": {
           display: "none,",
         },
       }}
     >
-      <Box
-        sx={{
-          position: "sticky",
-          top: 0,
-          backgroundColor: "white",
-          zIndex: 100,
-          border: 1,
-          borderColor: "secondary.main",
-          py: 2,
-          px: 3,
-        }}
-      >
-        <Typography fontSize={20} fontWeight={800}>
-          Welcome! {isAuthenticated ? user?.nickname : "Guest"}
-        </Typography>
+      <Box sx={{ borderRight: 1, borderRightColor: "secondary.main" }}>
+        {/* feed header */}
+        <Box
+          sx={{
+            position: "sticky",
+            top: 0,
+            backgroundColor: "rgba(255,255,255,0.8)",
+            backdropFilter: "blur(5px)",
+            zIndex: 100,
+            borderColor: "secondary.main",
+            py: 16,
+            px: 20,
+          }}
+        >
+          <Typography fontSize={20} fontWeight={800}>
+            Welcome! {isAuthenticated ? user?.nickname : "Guest"}
+          </Typography>
+        </Box>
+
+        <ReloadContext.Provider value={{ reload, setReload }}>
+          <TweetBox />
+        </ReloadContext.Provider>
+
+        <Flipper flipKey={posts} spring="wobbly">
+          {posts.map((post) => (
+            <Post key={post.id} {...post} />
+          ))}
+        </Flipper>
       </Box>
-
-      <ReloadContext.Provider value={{ reload, setReload }}>
-        <TweetBox />
-      </ReloadContext.Provider>
-
-      <Flipper flipKey={posts} spring="wobbly">
-        {posts.map((post) => (
-          <Post key={post.id} {...post} />
-        ))}
-      </Flipper>
     </Box>
   );
 };

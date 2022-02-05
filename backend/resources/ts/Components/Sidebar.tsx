@@ -15,18 +15,15 @@ const Sidebar: VFC = () => {
   return (
     <Box
       sx={{
-        flex: 0.3,
-        mt: 3,
-        px: 3,
+        flex: 0.2,
+        mt: 15,
+        pl: 10,
+        pr: 20,
         borderRight: 1,
         borderColor: "secondary.main",
       }}
     >
-      <Twitter
-        className="ml-3"
-        color="primary"
-        sx={{ fontSize: 30, ml: 3, mb: 3 }}
-      />
+      <Twitter color="primary" sx={{ fontSize: 30, ml: 20, mb: 20 }} />
       <SidebarOption Icon={Home} active={true} text="Home" />
       <SidebarOption Icon={Search} text="Explone" />
       <SidebarOption Icon={NotificationsNone} text="Notifications" />
@@ -36,7 +33,9 @@ const Sidebar: VFC = () => {
       <SidebarOption Icon={MoreHoriz} text="More" />
 
       {/* login btn */}
-      <Auth />
+      <Box sx={{ mt: 5 }}>
+        <Auth />
+      </Box>
     </Box>
   );
 };

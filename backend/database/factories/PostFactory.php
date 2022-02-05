@@ -21,7 +21,7 @@ class PostFactory extends Factory
         "emailVerified" => false,
         "avatar" => "",
         "type" => "tweet",
-        "content" => $this->faker->text,
+        "content" => $this->faker->text(100),
         "image" => null,
         "replay"   => 0,
         "retweet"   => 0,

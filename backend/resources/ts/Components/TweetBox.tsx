@@ -1,11 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Button, Avatar } from "@mui/material";
+import { Box, Button, Input } from "@mui/material";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
 import React, { useContext, VFC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SendPost } from "../types/Post";
 import { ReloadContext } from "./Feed";
+import { UserAvatar } from "./MyAvatar";
 
 type Inputs = {
   content: string;
@@ -14,11 +15,7 @@ type Inputs = {
 const TweetBox: VFC = () => {
   const { isAuthenticated, user } = useAuth0();
   const { reload, setReload } = useContext(ReloadContext);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!data.content) return;
@@ -50,6 +47,7 @@ const TweetBox: VFC = () => {
       .then((res) => {
         const now = format(parseISO(res.data), "yyyy-MM-dd HH:mm:ss");
         setReload(now);
+        reset();
       })
       .catch((err) => {
         console.log(err);
@@ -57,14 +55,55 @@ const TweetBox: VFC = () => {
   };
 
   return (
-    <Box>
+    // tweet box
+    <Box
+      sx={{
+        paddingBottom: 10,
+        borderBottom: 1,
+        borderBottomColor: "secondary.main",
+        paddingRight: 10,
+      }}
+    >
+      {/* tweet box form */}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Box>
-          <Avatar />
-          <input {...register("content", { maxLength: 10 })} />
-          {errors.content && <span>文字数を減らしてください</span>}
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          {/* tweet box input */}
+          <Box sx={{ display: "flex", padding: 20 }}>
+            <UserAvatar src={isAuthenticated ? user?.picture : ""} />
+            <Input
+              {...register("content", { maxLength: 100 })}
+              placeholder="ひとことどうぞ"
+              disableUnderline={true}
+              color="info"
+              sx={{
+                flex: 1,
+                marginLeft: 20,
+                fontSize: 20,
+              }}
+            />
+          </Box>
+          <Button
+            type="submit"
+            variant="outlined"
+            sx={{
+              backgroundColor: "primary.main",
+              border: "none",
+              color: "white",
+              fontWeight: 900,
+              textTransform: "inherit",
+              borderRadius: 15,
+              width: 90,
+              height: 40,
+              mt: 0,
+              ml: "auto",
+              "&:hover": {
+                backgroundColor: "#1b9def",
+              },
+            }}
+          >
+            ひとこと
+          </Button>
         </Box>
-        <Button type="submit">発言</Button>
       </form>
     </Box>
   );

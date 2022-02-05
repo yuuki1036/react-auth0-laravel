@@ -34,10 +34,10 @@ const styleNoActive = {
 const SidebarOption: VFC<Props> = ({ Icon, active = false, text }) => {
   return (
     <Box sx={active ? styleActive : styleNoActive}>
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 20, pt: 25 }}>
         <Icon />
       </Box>
-      <Typography fontWeight={800} fontSize={20} sx={{ mr: 3, mt: 0.5 }}>
+      <Typography fontWeight={800} fontSize={20} sx={{ mr: 20 }}>
         {text}
       </Typography>
     </Box>

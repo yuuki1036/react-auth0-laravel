@@ -9,6 +9,7 @@ let MyTheme = createTheme({
       main: "#e6ecf0",
     },
   },
+  spacing: (factor: number) => `${factor}px`,
   breakpoints: {},
 });
 
