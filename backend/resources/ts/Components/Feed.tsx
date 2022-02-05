@@ -23,12 +23,16 @@ export const ReloadContext = createContext(
 );
 
 const Feed: VFC = () => {
+  // 認証情報
   const { isAuthenticated, user } = useAuth0();
+  // tweetデータ
+  const [posts, setPosts] = useState<PostType[]>([]);
+  useEffect(() => getPostData(), []);
+  // tweet最終取得日時
   const [reload, setReload] = useState<string>(
     format(new Date(), "yyyy-MM-dd HH:mm:ss")
   );
-  const [posts, setPosts] = useState<PostType[]>([]);
-  useEffect(() => getPostData(), []);
+
   useEffect(() => reloadPostData(), [reload]);
 
   const getPostData = () => {
