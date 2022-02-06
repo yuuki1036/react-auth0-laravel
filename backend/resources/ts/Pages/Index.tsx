@@ -5,7 +5,6 @@ import Sidebar from "../Components/Sidebar";
 import Widgets from "../Components/Widgets";
 
 const Index = () => {
-  console.log(process.env.MIX_AUTH0_DOMAIN);
   return (
     <Box
       sx={{
