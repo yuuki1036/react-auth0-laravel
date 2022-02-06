@@ -12,7 +12,7 @@ ReactDOM.render(
     <Auth0Provider
       domain={process.env.MIX_AUTH0_DOMAIN}
       clientId={process.env.MIX_AUTH0_CLIENT_ID}
-      redirectUri={window.location.origin}
+      redirectUri={process.env.MIX_AUTH0_CALLBACK_URL}
     >
       <ThemeProvider theme={MyTheme}>
         <CssBaseline />
