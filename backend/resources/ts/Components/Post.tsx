@@ -26,7 +26,7 @@ const Post: VFC<Props> = (props) => {
         }}
       >
         {/* avatar */}
-        <Box sx={{ padding: 20 }}>
+        <Box sx={{ p: 20, pr: 10 }}>
           {props.avatar || props.displayName === "anonymous" ? (
             <UserAvatar src={props.avatar} />
           ) : (

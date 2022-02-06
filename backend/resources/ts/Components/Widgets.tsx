@@ -5,7 +5,7 @@ import { TwitterTimelineEmbed } from "react-twitter-embed";
 
 const Widgets: VFC = () => {
   return (
-    <Box sx={{ flex: 0.4 }}>
+    <Box sx={{ flex: 1.5 }}>
       <Box
         sx={{
           display: "flex",

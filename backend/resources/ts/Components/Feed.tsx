@@ -13,12 +13,12 @@ import { Flipper } from "react-flip-toolkit";
 import Post from "./Post";
 import TweetBox from "./TweetBox";
 import { useAuth0 } from "@auth0/auth0-react";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 export const ReloadContext = createContext(
   {} as {
-    reload: string;
-    setReload: Dispatch<SetStateAction<string>>;
+    reload: boolean;
+    setReload: Dispatch<SetStateAction<boolean>>;
   }
 );
 
@@ -28,12 +28,14 @@ const Feed: VFC = () => {
   // tweetデータ
   const [posts, setPosts] = useState<PostType[]>([]);
   useEffect(() => getPostData(), []);
-  // tweet最終取得日時
-  const [reload, setReload] = useState<string>(
+  // feed更新フラグ
+  const [reload, setReload] = useState<boolean>(true);
+  useEffect(() => reloadPostData(), [reload]);
+
+  // 最終取得日時
+  const [latest, setLatest] = useState<string>(
     format(new Date(), "yyyy-MM-dd HH:mm:ss")
   );
-
-  useEffect(() => reloadPostData(), [reload]);
 
   const getPostData = () => {
     axios
@@ -48,9 +50,20 @@ const Feed: VFC = () => {
 
   const reloadPostData = () => {
     axios
-      .post("api/post/reload", { reload: reload })
+      .post("api/post/reload", { latest })
       .then((res) => {
-        if (res.data.length > 0) setPosts([...res.data, ...posts]);
+        if (res.data.length > 0) {
+          // 最新tweetの投稿日時文字列取得
+          const createdAtLatest = res.data[0].created_at;
+          const formatLatest = format(
+            parseISO(createdAtLatest),
+            "yyyy-MM-dd HH:mm:ss"
+          );
+          // セット
+          setLatest(formatLatest);
+          // 最新のtweetをpostsに追加
+          setPosts([...res.data, ...posts]);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -60,9 +73,8 @@ const Feed: VFC = () => {
   return (
     <Box
       sx={{
-        flex: 0.4,
         p: 0,
-        minWidth: "fit-content",
+        width: 600,
         overflowY: "scroll",
         "::-webkit-scrollbar": {
           display: "none,",

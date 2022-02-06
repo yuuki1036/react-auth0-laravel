@@ -33,15 +33,13 @@ class PostController extends Controller
         // $post->retweetIds = $request->retweetIds;
         // $post->likesIds = $request->likesIds;
         Post::create($request->all());
-        $this_post = Post::latest('created_at')->first();
-        $reload = $this_post->created_at;
-        return response()->json($reload, 200);
+        return response()->json("OK", 200);
       }
 
-    // 全post取得
+    // 最新データ問い合わせ
     public function reload(Request $request)
     {
-        $posts = DB::table('posts')->where('created_at', '>=', $request->reload)->get();
+        $posts = DB::table('posts')->where('created_at', '>', $request->latest)->get();
         return response()->json($posts, 200);
     }
 }

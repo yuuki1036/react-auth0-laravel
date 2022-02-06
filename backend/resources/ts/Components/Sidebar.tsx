@@ -15,7 +15,7 @@ const Sidebar: VFC = () => {
   return (
     <Box
       sx={{
-        flex: 0.2,
+        flex: 1,
         mt: 15,
         pl: 10,
         pr: 20,
@@ -33,7 +33,7 @@ const Sidebar: VFC = () => {
       <SidebarOption Icon={MoreHoriz} text="More" />
 
       {/* login btn */}
-      <Box sx={{ mt: 5 }}>
+      <Box sx={{ pt: 10 }}>
         <Auth />
       </Box>
     </Box>

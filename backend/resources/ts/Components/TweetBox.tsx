@@ -1,7 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, Input } from "@mui/material";
 import axios from "axios";
-import { format, parseISO } from "date-fns";
 import React, { useContext, VFC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SendPost } from "../types/Post";
@@ -45,9 +44,10 @@ const TweetBox: VFC = () => {
     axios
       .post("api/post/create", sendPost)
       .then((res) => {
-        const now = format(parseISO(res.data), "yyyy-MM-dd HH:mm:ss");
-        setReload(now);
+        // 投稿フォーム入力値削除
         reset();
+        // feed更新
+        setReload(!reload);
       })
       .catch((err) => {
         console.log(err);
@@ -68,16 +68,16 @@ const TweetBox: VFC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           {/* tweet box input */}
-          <Box sx={{ display: "flex", padding: 20 }}>
+          <Box sx={{ display: "flex", px: 20, py: 10 }}>
             <UserAvatar src={isAuthenticated ? user?.picture : ""} />
             <Input
               {...register("content", { maxLength: 100 })}
-              placeholder="ひとことどうぞ"
+              placeholder="What's happening?"
               disableUnderline={true}
               color="info"
               sx={{
                 flex: 1,
-                marginLeft: 20,
+                ml: 20,
                 fontSize: 20,
               }}
             />
@@ -90,6 +90,7 @@ const TweetBox: VFC = () => {
               border: "none",
               color: "white",
               fontWeight: 900,
+              fontSize: 17,
               textTransform: "inherit",
               borderRadius: 15,
               width: 90,
@@ -101,7 +102,7 @@ const TweetBox: VFC = () => {
               },
             }}
           >
-            ひとこと
+            Tweet
           </Button>
         </Box>
       </form>

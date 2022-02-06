@@ -12,8 +12,8 @@ const Index = () => {
         height: "100vh",
         maxWidth: 1300,
         mx: "auto",
-        pddingY: 0,
-        paddingX: 10,
+        py: 0,
+        px: 10,
       }}
     >
       <Sidebar />

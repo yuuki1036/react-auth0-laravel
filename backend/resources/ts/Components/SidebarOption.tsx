@@ -11,6 +11,7 @@ type Props = {
 const styleActive = {
   display: "flex",
   alignItems: "center",
+  m: 10,
   color: "primary.main",
   cursor: "pointer",
   "&:hover": {
@@ -23,6 +24,7 @@ const styleActive = {
 const styleNoActive = {
   display: "flex",
   alignItems: "center",
+  m: 10,
   cursor: "pointer",
   "&:hover": {
     backgroundColor: "#e8f5fe",
@@ -34,7 +36,7 @@ const styleNoActive = {
 const SidebarOption: VFC<Props> = ({ Icon, active = false, text }) => {
   return (
     <Box sx={active ? styleActive : styleNoActive}>
-      <Box sx={{ p: 20, pt: 25 }}>
+      <Box sx={{ p: 10, pt: 15 }}>
         <Icon />
       </Box>
       <Typography fontWeight={800} fontSize={20} sx={{ mr: 20 }}>
