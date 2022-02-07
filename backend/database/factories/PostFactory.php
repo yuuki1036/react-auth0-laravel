@@ -15,7 +15,7 @@ class PostFactory extends Factory
     public function definition()
     {
         $name = $this->faker->name;
-        $date = Carbon::today()->subDays(rand(0, 365));
+        $date = Carbon::today()->subDays(rand(0, 365))->subHours(rand(0, 23)) ->subMinutes(rand(0, 59))->subSeconds(rand(0, 59));
       return [
         "userId"  => $this->faker->uuid,
         "displayName" => $name,
