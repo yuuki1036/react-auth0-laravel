@@ -19,4 +19,6 @@ Route::group(['middleware' => 'api'], function () {
     Route::get('post/get', [PostController::class, 'getAll']);
     Route::post('post/create', [PostController::class, 'create']);
     Route::post('post/reload', [PostController::class, 'reload']);
+    Route::post('post/update/likes/u', [PostController::class, 'updateLikesUp']);
+    Route::post('post/update/likes/d', [PostController::class, 'updateLikesDown']);
 });

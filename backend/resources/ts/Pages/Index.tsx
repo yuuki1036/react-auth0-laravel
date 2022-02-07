@@ -1,5 +1,12 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { Box } from "@mui/material";
-import React from "react";
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import Feed from "../Components/Feed";
 import Sidebar from "../Components/Sidebar";
 import Widgets from "../Components/Widgets";

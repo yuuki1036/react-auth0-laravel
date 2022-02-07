@@ -42,4 +42,53 @@ class PostController extends Controller
         $posts = DB::table('posts')->where('created_at', '>', $request->latest)->get();
         return response()->json($posts, 200);
     }
+
+
+
+    // like を増やす
+    public function updateLikesUp(Request $request)
+    {
+        $post = Post::find($request->id);
+        $post->likes += 1;
+        $post->likesIds = $this->addUserId($post->likesIds, $post->userId);
+        $post->save();
+        return response()->json("OK", 200);
+    }
+
+    // like を減らす
+    public function updateLikesDown(Request $request)
+    {
+        $post = Post::find($request->id);
+        $post->likes -= 1;
+        $post->likesIds = $this->removeUserId($post->likesIds, $post->userId);
+        $post->save();
+        return response()->json("OK", 200);
+    }
+
+    public function addUserId($arrayString, $id)
+    {
+        if ($id === "44hJcni36xHwbcPHtKTa") return $arrayString;
+        if ($arrayString === "") {
+            $arrayString = $id;
+        } else {
+            $array = explode(',', $arrayString);
+            $array[] = $id;
+            $arrayString = implode(",", $array);
+        }
+        return $arrayString;
+    }
+
+    public function removeUserId($arrayString, $id)
+    {
+        if ($id === "44hJcni36xHwbcPHtKTa") return $arrayString;
+        if ($arrayString !== "") {
+            $array = explode(',', $arrayString);
+            $array = array_values(array_diff($array, [$id]));
+            $arrayString = implode(",", $array);
+        }
+        return $arrayString;
+    }
+
+
+
 }

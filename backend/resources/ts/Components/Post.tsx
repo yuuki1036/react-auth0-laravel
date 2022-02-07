@@ -1,14 +1,12 @@
 import React, { VFC } from "react";
 import { Box, Typography } from "@mui/material";
-import Verified from "@mui/icons-material/Verified";
-import ChatBubbleOutlineRounded from "@mui/icons-material/ChatBubbleOutlineRounded";
-import RepeatRounded from "@mui/icons-material/RepeatRounded";
-import FavoriteBorderRounded from "@mui/icons-material/FavoriteBorderRounded";
-import PublishRounded from "@mui/icons-material/PublishRounded";
 import { Post } from "../types/Post";
 import { Flipped } from "react-flip-toolkit";
 import { GuestAvatar, UserAvatar } from "./MyAvatar";
 import { format } from "date-fns";
+import Replay from "./Replay";
+import ReTweet from "./Retweet";
+import Likes from "./Likes";
 
 type Props = Post;
 
@@ -66,12 +64,18 @@ const Post: VFC<Props> = (props) => {
               justifyContent: "space-between",
               mt: 20,
               mr: 20,
+              color: "gray",
             }}
           >
-            <ChatBubbleOutlineRounded fontSize="small" />
-            <RepeatRounded fontSize="small" />
-            <FavoriteBorderRounded fontSize="small" />
-            <PublishRounded fontSize="small" />
+            <Replay count={props.replay} />
+            <ReTweet count={props.retweet} />
+            <Likes
+              count={props.likes}
+              tweetId={props.id}
+              userId={props.userId}
+              userIds={props.likesIds.split(",")}
+            />
+            <Box sx={{ width: 40 }}></Box>
           </Box>
         </Box>
       </Box>

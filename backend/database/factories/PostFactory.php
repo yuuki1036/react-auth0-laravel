@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
@@ -14,6 +15,7 @@ class PostFactory extends Factory
     public function definition()
     {
         $name = $this->faker->name;
+        $date = Carbon::today()->subDays(rand(0, 365));
       return [
         "userId"  => $this->faker->uuid,
         "displayName" => $name,
@@ -26,9 +28,11 @@ class PostFactory extends Factory
         "replay"   => 0,
         "retweet"   => 0,
         "likes"   => 0,
-        "replayIds" => "{}",
-        "retweetIds" => "{}",
-        "likesIds" => "{}",
+        "replayIds" => "",
+        "retweetIds" => "",
+        "likesIds" => "",
+        "created_at" => $date,
+        "updated_at" => $date,
     ];
     }
 }

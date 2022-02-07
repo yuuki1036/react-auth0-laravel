@@ -13,7 +13,6 @@ import { Flipper } from "react-flip-toolkit";
 import Post from "./Post";
 import TweetBox from "./TweetBox";
 import { useAuth0 } from "@auth0/auth0-react";
-import { format, parseISO } from "date-fns";
 
 export const ReloadContext = createContext(
   {} as {
@@ -25,17 +24,16 @@ export const ReloadContext = createContext(
 const Feed: VFC = () => {
   // 認証情報
   const { isAuthenticated, user } = useAuth0();
+
   // tweetデータ
   const [posts, setPosts] = useState<PostType[]>([]);
-  useEffect(() => getPostData(), []);
   // feed更新フラグ
   const [reload, setReload] = useState<boolean>(true);
-  useEffect(() => reloadPostData(), [reload]);
+  useEffect(() => getPostData(), [reload, isAuthenticated]);
+  // useEffect(() => reloadPostData(), [reload]);
 
   // 最終取得日時
-  const [latest, setLatest] = useState<string>(
-    format(new Date(), "yyyy-MM-dd HH:mm:ss")
-  );
+  const [latest, setLatest] = useState<number>(0);
 
   const getPostData = () => {
     axios
@@ -48,33 +46,33 @@ const Feed: VFC = () => {
       });
   };
 
-  const reloadPostData = () => {
-    axios
-      .post("api/post/reload", { latest })
-      .then((res) => {
-        if (res.data.length > 0) {
-          // 最新tweetの投稿日時文字列取得
-          const createdAtLatest = res.data[0].created_at;
-          const formatLatest = format(
-            parseISO(createdAtLatest),
-            "yyyy-MM-dd HH:mm:ss"
-          );
-          // セット
-          setLatest(formatLatest);
-          // 最新のtweetをpostsに追加
-          setPosts([...res.data, ...posts]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const reloadPostData = () => {
+  //   axios
+  //     .post("api/post/reload", { latest })
+  //     .then((res) => {
+  //       if (res.data.length > 0) {
+  //         // 最新tweetの投稿日時文字列取得
+  //         const createdAtLatest = res.data[0].created_at;
+  //         const formatLatest = format(
+  //           parseISO(createdAtLatest),
+  //           "yyyy-MM-dd HH:mm:ss"
+  //         );
+  //         // セット
+  //         setLatest(formatLatest);
+  //         // 最新のtweetをpostsに追加
+  //         setPosts([...res.data, ...posts]);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   return (
     <Box
       sx={{
         p: 0,
-        width: 600,
+        width: 550,
         overflowY: "scroll",
         "::-webkit-scrollbar": {
           display: "none,",
@@ -102,13 +100,13 @@ const Feed: VFC = () => {
 
         <ReloadContext.Provider value={{ reload, setReload }}>
           <TweetBox />
-        </ReloadContext.Provider>
 
-        <Flipper flipKey={posts} spring="wobbly">
-          {posts.map((post) => (
-            <Post key={post.id} {...post} />
-          ))}
-        </Flipper>
+          <Flipper flipKey={posts} spring="wobbly">
+            {posts.map((post) => (
+              <Post key={post.id} {...post} />
+            ))}
+          </Flipper>
+        </ReloadContext.Provider>
       </Box>
     </Box>
   );
