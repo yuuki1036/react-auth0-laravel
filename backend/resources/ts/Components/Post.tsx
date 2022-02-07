@@ -20,7 +20,6 @@ const Post: VFC<Props> = (props) => {
           alignItems: "flex-start",
           borderBottom: 1,
           borderBottomColor: "secondary.main",
-          paddingBottom: 10,
         }}
       >
         {/* avatar */}

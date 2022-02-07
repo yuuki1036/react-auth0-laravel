@@ -28,7 +28,7 @@ const Widgets: VFC = () => {
           px: 10,
         }}
       >
-        <Typography fontSize={18} fontWeight={800} mb={5}>
+        <Typography fontSize={20} fontWeight={800} mb={5}>
           What's happeing
         </Typography>
 
@@ -37,6 +37,7 @@ const Widgets: VFC = () => {
           screenName="Twitter"
           options={{ height: "80vh" }}
           noScrollbar={true}
+          noHeader={true}
           noFooter={true}
         />
       </Box>
