@@ -16,6 +16,7 @@ export type Post = {
   likesIds: string;
   created_at: string;
   updated_at: string;
+  authUserId?: string;
 };
 
 export type SendPost = {

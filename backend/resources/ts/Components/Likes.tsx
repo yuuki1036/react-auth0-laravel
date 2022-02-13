@@ -14,13 +14,12 @@ type Props = {
 
 const Likes: VFC<Props> = ({ count, tweetId, userId, userIds }) => {
   const { reload, setReload } = useContext(ReloadContext);
-  const [isLike, setIsLike] = useState<boolean>(false);
-
+  const [isLike, setIsLike] = useState<boolean>(userIds.includes(userId));
   const handleClick = () => {
-    if (isLike) {
+    if (!isLike) {
       setIsLike(!isLike);
       axios
-        .post("api/post/update/likes/d", { id: tweetId, userId })
+        .post("api/post/update/likes/u", { id: tweetId, userId })
         .then((res) => {
           // feed更新
           setReload(!reload);
@@ -31,7 +30,7 @@ const Likes: VFC<Props> = ({ count, tweetId, userId, userIds }) => {
     } else {
       setIsLike(!isLike);
       axios
-        .post("api/post/update/likes/u", { id: tweetId, userId })
+        .post("api/post/update/likes/d", { id: tweetId, userId })
         .then((res) => {
           // feed更新
           setReload(!reload);

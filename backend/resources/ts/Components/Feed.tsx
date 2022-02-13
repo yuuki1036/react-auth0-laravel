@@ -29,7 +29,17 @@ const Feed: VFC = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
   // feed更新フラグ
   const [reload, setReload] = useState<boolean>(true);
-  useEffect(() => getPostData(), [reload, isAuthenticated]);
+  // ユーザーID
+  const [authUserId, setAuthUserId] = useState<string>("44hJcni36xHwbcPHtKTa");
+  useEffect(() => {
+    let tempId;
+    if (isAuthenticated && user?.sub) {
+      tempId = user.sub.match(/.*\|(.+)/)?.[1];
+    }
+    setAuthUserId(tempId ?? "44hJcni36xHwbcPHtKTa");
+  }, [isAuthenticated]);
+  useEffect(() => setReload(!reload), [isAuthenticated]);
+  useEffect(() => getPostData(), [reload]);
   // useEffect(() => reloadPostData(), [reload]);
 
   // 最終取得日時
@@ -101,9 +111,9 @@ const Feed: VFC = () => {
         <ReloadContext.Provider value={{ reload, setReload }}>
           <TweetBox />
 
-          <Flipper flipKey={posts} spring="wobbly">
+          <Flipper flipKey={reload} spring="wobbly">
             {posts.map((post) => (
-              <Post key={post.id} {...post} />
+              <Post key={post.id} authUserId={authUserId} {...post} />
             ))}
           </Flipper>
         </ReloadContext.Provider>

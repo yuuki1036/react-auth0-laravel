@@ -1,4 +1,4 @@
-import React, { VFC } from "react";
+import React, { useEffect, useState, VFC } from "react";
 import { Box, Typography } from "@mui/material";
 import { Post } from "../types/Post";
 import { Flipped } from "react-flip-toolkit";
@@ -71,7 +71,7 @@ const Post: VFC<Props> = (props) => {
             <Likes
               count={props.likes}
               tweetId={props.id}
-              userId={props.userId}
+              userId={props.authUserId ?? "44hJcni36xHwbcPHtKTa"}
               userIds={props.likesIds.split(",")}
             />
             <Box sx={{ width: 40 }}></Box>

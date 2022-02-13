@@ -1,5 +1,5 @@
 import React, { VFC } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import SidebarOption from "./SidebarOption";
 import Twitter from "@mui/icons-material/Twitter";
 import Home from "@mui/icons-material/Home";
@@ -16,14 +16,16 @@ const Sidebar: VFC = () => {
     <Box
       sx={{
         flex: 1,
-        mt: 15,
+        mt: 8,
         pl: 10,
         pr: 20,
         borderRight: 1,
         borderColor: "secondary.main",
       }}
     >
-      <Twitter color="primary" sx={{ fontSize: 30, ml: 20, mb: 20 }} />
+      <Typography color="primary" fontSize={28} fontWeight="bold">
+        HITOKOTO
+      </Typography>
       <SidebarOption Icon={Home} active={true} text="Home" />
       <SidebarOption Icon={Search} text="Explone" />
       <SidebarOption Icon={NotificationsNone} text="Notifications" />

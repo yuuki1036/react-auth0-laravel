@@ -36,9 +36,9 @@ const TweetBox: VFC = () => {
       replay: 0,
       retweet: 0,
       likes: 0,
-      replayIds: "{}",
-      retweetIds: "{}",
-      likesIds: "{}",
+      replayIds: "",
+      retweetIds: "",
+      likesIds: "",
     };
 
     axios

@@ -50,7 +50,7 @@ class PostController extends Controller
     {
         $post = Post::find($request->id);
         $post->likes += 1;
-        $post->likesIds = $this->addUserId($post->likesIds, $post->userId);
+        $post->likesIds = $this->addUserId($post->likesIds, $request->userId);
         $post->save();
         return response()->json("OK", 200);
     }
@@ -60,7 +60,7 @@ class PostController extends Controller
     {
         $post = Post::find($request->id);
         $post->likes -= 1;
-        $post->likesIds = $this->removeUserId($post->likesIds, $post->userId);
+        $post->likesIds = $this->removeUserId($post->likesIds, $request->userId);
         $post->save();
         return response()->json("OK", 200);
     }
