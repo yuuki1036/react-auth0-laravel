@@ -31,6 +31,7 @@ const TweetBox: VFC = () => {
       emailVerified: user?.email_verified ?? false,
       avatar: user?.picture ?? "",
       type: "tweet",
+      public: true,
       content: data.content,
       image: "",
       replay: 0,
@@ -39,8 +40,9 @@ const TweetBox: VFC = () => {
       replayIds: "",
       retweetIds: "",
       likesIds: "",
+      replayTo: "",
     };
-
+    console.log(sendPost);
     axios
       .post("api/post/create", sendPost)
       .then((res) => {
@@ -93,7 +95,7 @@ const TweetBox: VFC = () => {
               fontSize: 17,
               textTransform: "inherit",
               borderRadius: 15,
-              width: 90,
+              width: 140,
               height: 40,
               mt: 0,
               ml: "auto",
@@ -102,7 +104,7 @@ const TweetBox: VFC = () => {
               },
             }}
           >
-            Tweet
+            HITOKOTO
           </Button>
         </Box>
       </form>

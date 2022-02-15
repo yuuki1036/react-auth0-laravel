@@ -16,6 +16,7 @@ class Post extends Model
         "emailVerified",
         "avatar",
         "type",
+        "public",
         "content",
         "image",
         "replay",
@@ -24,5 +25,7 @@ class Post extends Model
         "replayIds",
         "retweetIds",
         "likesIds",
+        "replayTo",
+        "retweetBy",
     ];
 }

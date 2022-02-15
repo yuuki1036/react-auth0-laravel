@@ -58,7 +58,9 @@ const Likes: VFC<Props> = ({ count, tweetId, userId, userIds }) => {
         <FavoriteBorderRounded fontSize="small" />
       )}
 
-      <Typography fontSize={15}>{count}</Typography>
+      <Typography fontSize={15} color={isLike ? "red" : ""}>
+        {count}
+      </Typography>
     </Box>
   );
 };

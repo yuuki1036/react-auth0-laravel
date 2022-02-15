@@ -6,17 +6,21 @@ export type Post = {
   emailVerified: boolean;
   avatar: string;
   type: "tweet" | "replay" | "retweet";
+  public: boolean;
   content: string;
   image: string;
   replay: number;
   retweet: number;
   likes: number;
-  replayIds: string;
-  retweetIds: string;
-  likesIds: string;
+  replayIds?: string;
+  retweetIds?: string;
+  likesIds?: string;
+  replayTo?: string;
+  retweetBy?: string;
+  authUserId?: string;
+  authUserName?: string;
   created_at: string;
   updated_at: string;
-  authUserId?: string;
 };
 
 export type SendPost = {
@@ -26,12 +30,15 @@ export type SendPost = {
   emailVerified: boolean;
   avatar: string;
   type: "tweet";
+  public: boolean;
   content: string;
   image: string;
   replay: number;
   retweet: number;
   likes: number;
-  replayIds: string;
-  retweetIds: string;
-  likesIds: string;
+  replayIds?: string;
+  retweetIds?: string;
+  likesIds?: string;
+  replayTo?: string;
+  retweetBy?: string;
 };

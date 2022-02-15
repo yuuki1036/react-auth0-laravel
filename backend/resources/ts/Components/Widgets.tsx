@@ -29,7 +29,7 @@ const Widgets: VFC = () => {
         }}
       >
         <Typography fontSize={20} fontWeight={800} mb={5}>
-          What's happeing
+          What's happening
         </Typography>
 
         <TwitterTimelineEmbed

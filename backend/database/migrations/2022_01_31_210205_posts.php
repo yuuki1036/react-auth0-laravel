@@ -21,14 +21,17 @@ class Posts extends Migration
           $table->boolean('emailVerified');
           $table->text('avatar')->nullable();
           $table->string('type', 10);
+          $table->boolean('public');
           $table->string('content', 280);
           $table->binary('image')->nullable();
-          $table->integer('replay');
-          $table->integer('retweet');
-          $table->integer('likes');
-          $table->longText('replayIds');
-          $table->longText('retweetIds');
-          $table->longText('likesIds');
+          $table->integer('replay')->default(0);
+          $table->integer('retweet')->default(0);
+          $table->integer('likes')->default(0);
+          $table->longText('replayIds')->nullable();
+          $table->longText('retweetIds')->nullable();
+          $table->longText('likesIds')->nullable();
+          $table->string('replayTo', 40)->nullable();
+          $table->string('retweetBy', 40)->nullable();
           $table->timestamps();
         });
     }

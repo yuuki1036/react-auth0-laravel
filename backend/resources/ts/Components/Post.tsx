@@ -4,6 +4,7 @@ import { Post } from "../types/Post";
 import { Flipped } from "react-flip-toolkit";
 import { GuestAvatar, UserAvatar } from "./MyAvatar";
 import { format } from "date-fns";
+import RepeatRounded from "@mui/icons-material/RepeatRounded";
 import Replay from "./Replay";
 import ReTweet from "./Retweet";
 import Likes from "./Likes";
@@ -11,6 +12,8 @@ import Likes from "./Likes";
 type Props = Post;
 
 const Post: VFC<Props> = (props) => {
+  const userId = props.authUserId ?? "44hJcni36xHwbcPHtKTa";
+  const userName = props.authUserName ?? "anonymous";
   return (
     <Flipped flipId={props.id}>
       {/* post */}
@@ -32,6 +35,14 @@ const Post: VFC<Props> = (props) => {
         </Box>
         {/* post body */}
         <Box sx={{ flex: 1, padding: 10 }}>
+          {props.type === "retweet" && (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <RepeatRounded fontSize="small" sx={{ color: "gray", mr: 2 }} />
+              <Typography fontSize={14} fontWeight={800} color="gray">
+                {props.retweetBy} rehitokoted
+              </Typography>
+            </Box>
+          )}
           <Box>
             <Typography
               fontSize={17}
@@ -67,12 +78,18 @@ const Post: VFC<Props> = (props) => {
             }}
           >
             <Replay count={props.replay} />
-            <ReTweet count={props.retweet} />
+            <ReTweet
+              count={props.retweet}
+              tweetId={props.id}
+              userId={userId}
+              userIds={props.retweetIds ? props.retweetIds.split(",") : [""]}
+              userName={userName}
+            />
             <Likes
               count={props.likes}
               tweetId={props.id}
-              userId={props.authUserId ?? "44hJcni36xHwbcPHtKTa"}
-              userIds={props.likesIds.split(",")}
+              userId={userId}
+              userIds={props.likesIds ? props.likesIds.split(",") : [""]}
             />
             <Box sx={{ width: 40 }}></Box>
           </Box>

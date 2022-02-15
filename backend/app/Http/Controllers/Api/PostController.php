@@ -9,15 +9,29 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
-    // 全post取得
-    public function getAll()
+    // 全公開tweet取得
+    public function getPublicAll()
     {
-        $posts = Post::latest('created_at')->get();
+        $posts = DB::table('posts')
+            ->where('public', '=', true)
+            ->latest('created_at')
+            ->get();
+        return response()->json($posts, 200);
+    }
+
+    // 非公開tweet取得
+    public function getPrivateAll()
+    {
+        $posts = DB::table('posts')
+            ->where('public', '=', false)
+            ->latest('created_at')
+            ->get();
         return response()->json($posts, 200);
     }
 
     // post作成
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         // $post->userId = $request->userId;
         // $post->displayName = $request->displayName;
         // $post->userName = $request->userName;
@@ -34,7 +48,27 @@ class PostController extends Controller
         // $post->likesIds = $request->likesIds;
         Post::create($request->all());
         return response()->json("OK", 200);
-      }
+    }
+
+    // post作成
+    public function retweet(Request $request)
+    {
+        $post = Post::find($request->id);
+        $retweet = $post->replicate();
+        $retweet->type = "retweet";
+        $retweet->replay = 0;
+        $retweet->retweet = 0;
+        $retweet->likes = 0;
+        $retweet->replayIds = "";
+        $retweet->retweetIds = "";
+        $retweet->likesIds = "";
+        $retweet->replayTo = "";
+        $retweet->retweetBy = $request->userName;
+        $retweet->save();
+        // retweet カウントアップ
+        $this->updateReTweetUp($request->id, $request->userId);
+        return response()->json("OK", 200);
+    }
 
     // 最新データ問い合わせ
     public function reload(Request $request)
@@ -63,6 +97,15 @@ class PostController extends Controller
         $post->likesIds = $this->removeUserId($post->likesIds, $request->userId);
         $post->save();
         return response()->json("OK", 200);
+    }
+
+    // like を増やす
+    public function updateReTweetUp($id, $userId)
+    {
+        $post = Post::find($id);
+        $post->retweet += 1;
+        $post->retweetIds = $this->addUserId($post->retweetIds, $userId);
+        $post->save();
     }
 
     public function addUserId($arrayString, $id)

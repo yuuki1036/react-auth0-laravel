@@ -47,7 +47,7 @@ const Feed: VFC = () => {
 
   const getPostData = () => {
     axios
-      .get("api/post/get")
+      .get("api/post/get/public")
       .then((res) => {
         setPosts(res.data);
       })
@@ -111,9 +111,14 @@ const Feed: VFC = () => {
         <ReloadContext.Provider value={{ reload, setReload }}>
           <TweetBox />
 
-          <Flipper flipKey={reload} spring="wobbly">
+          <Flipper flipKey={posts} spring="wobbly">
             {posts.map((post) => (
-              <Post key={post.id} authUserId={authUserId} {...post} />
+              <Post
+                key={post.id}
+                authUserId={authUserId}
+                authUserName={user?.nickname}
+                {...post}
+              />
             ))}
           </Flipper>
         </ReloadContext.Provider>
