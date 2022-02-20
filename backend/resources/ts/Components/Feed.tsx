@@ -8,11 +8,11 @@ import React, {
 } from "react";
 import { Box, Typography } from "@mui/material";
 import axios from "axios";
-import { Post as PostType } from "../types/Post";
 import { Flipper } from "react-flip-toolkit";
-import Post from "./Post";
 import TweetBox from "./TweetBox";
-import { useAuth0 } from "@auth0/auth0-react";
+import { Post as PostType } from "../types/Post";
+import { Auth } from "../types/Auth";
+import Tweet from "./Tweet";
 
 export const ReloadContext = createContext(
   {} as {
@@ -21,29 +21,22 @@ export const ReloadContext = createContext(
   }
 );
 
-const Feed: VFC = () => {
-  // 認証情報
-  const { isAuthenticated, user } = useAuth0();
+type Props = {
+  auth: Auth;
+};
 
+const Feed: VFC<Props> = ({ auth }) => {
   // tweetデータ
   const [posts, setPosts] = useState<PostType[]>([]);
   // feed更新フラグ
   const [reload, setReload] = useState<boolean>(true);
-  // ユーザーID
-  const [authUserId, setAuthUserId] = useState<string>("44hJcni36xHwbcPHtKTa");
-  useEffect(() => {
-    let tempId;
-    if (isAuthenticated && user?.sub) {
-      tempId = user.sub.match(/.*\|(.+)/)?.[1];
-    }
-    setAuthUserId(tempId ?? "44hJcni36xHwbcPHtKTa");
-  }, [isAuthenticated]);
-  useEffect(() => setReload(!reload), [isAuthenticated]);
+
+  useEffect(() => setReload(!reload), []);
   useEffect(() => getPostData(), [reload]);
   // useEffect(() => reloadPostData(), [reload]);
 
   // 最終取得日時
-  const [latest, setLatest] = useState<number>(0);
+  // const [latest, setLatest] = useState<number>(0);
 
   const getPostData = () => {
     axios
@@ -104,21 +97,16 @@ const Feed: VFC = () => {
           }}
         >
           <Typography fontSize={20} fontWeight={800}>
-            Welcome! {isAuthenticated ? user?.nickname : "Guest"}
+            Welcome! {auth.isLogin ? auth.authDisplayName : "Guest"}
           </Typography>
         </Box>
 
         <ReloadContext.Provider value={{ reload, setReload }}>
-          <TweetBox />
+          <TweetBox auth={auth} />
 
           <Flipper flipKey={posts} spring="wobbly">
             {posts.map((post) => (
-              <Post
-                key={post.id}
-                authUserId={authUserId}
-                authUserName={user?.nickname}
-                {...post}
-              />
+              <Tweet key={post.id} post={post} auth={auth} />
             ))}
           </Flipper>
         </ReloadContext.Provider>

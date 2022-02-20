@@ -9,7 +9,7 @@ import BookmarkBorder from "@mui/icons-material/BookmarkBorder";
 import ListAlt from "@mui/icons-material/ListAlt";
 import PermIdentity from "@mui/icons-material/PermIdentity";
 import MoreHoriz from "@mui/icons-material/MoreHoriz";
-import Auth from "./Auth";
+import AuthBtn from "./AuthBtn";
 
 const Sidebar: VFC = () => {
   return (
@@ -37,7 +37,7 @@ const Sidebar: VFC = () => {
 
       {/* login btn */}
       <Box sx={{ pt: 10 }}>
-        <Auth />
+        <AuthBtn />
       </Box>
     </Box>
   );

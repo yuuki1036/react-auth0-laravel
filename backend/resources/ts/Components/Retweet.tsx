@@ -1,26 +1,36 @@
+import React, { useContext, useState, VFC } from "react";
+import axios from "axios";
+import { Box, Typography } from "@mui/material";
 import RepeatRounded from "@mui/icons-material/RepeatRounded";
 import RepeatOn from "@mui/icons-material/RepeatOn";
-import { Box, Typography } from "@mui/material";
-import axios from "axios";
-import React, { useContext, useState, VFC } from "react";
 import { ReloadContext } from "./Feed";
+import { formatted } from "../types/Tweet";
+import { Auth } from "../types/Auth";
 
 type Props = {
   count: number;
   tweetId: number;
-  userId: string;
-  userIds: string[];
-  userName: string;
+  formatted: formatted;
+  auth: Auth;
 };
 
-const ReTweet: VFC<Props> = ({ count, tweetId, userId, userIds, userName }) => {
+const ReTweet: VFC<Props> = ({ count, tweetId, formatted, auth }) => {
+  // feed更新フラグ
   const { reload, setReload } = useContext(ReloadContext);
-  const [isReTweet, setIsReTweet] = useState<boolean>(userIds.includes(userId));
+  // リツィートフラグ
+  const [isReTweet, setIsReTweet] = useState<boolean>(
+    formatted.retweetIds.includes(auth.authId)
+  );
+
   const handleClick = () => {
     if (isReTweet) return;
     setIsReTweet(true);
     axios
-      .post("api/post/create/retweet", { id: tweetId, userId, userName })
+      .post("api/post/create/retweet", {
+        id: tweetId,
+        userId: auth.authId,
+        userName: auth.authName,
+      })
       .then((res) => {
         // feed更新
         setReload(!reload);

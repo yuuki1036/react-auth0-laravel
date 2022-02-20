@@ -1,8 +1,8 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Button, Input } from "@mui/material";
-import axios from "axios";
 import React, { useContext, VFC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import axios from "axios";
+import { Box, Button, Input } from "@mui/material";
+import { Auth } from "../types/Auth";
 import { SendPost } from "../types/Post";
 import { ReloadContext } from "./Feed";
 import { UserAvatar } from "./MyAvatar";
@@ -11,25 +11,23 @@ type Inputs = {
   content: string;
 };
 
-const TweetBox: VFC = () => {
-  const { isAuthenticated, user } = useAuth0();
+type Props = {
+  auth: Auth;
+};
+
+const TweetBox: VFC<Props> = ({ auth }) => {
   const { reload, setReload } = useContext(ReloadContext);
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!data.content) return;
 
-    let userId;
-    if (isAuthenticated && user?.sub) {
-      userId = user.sub.match(/.*\|(.+)/)?.[1];
-    }
-
     const sendPost: SendPost = {
-      userId: userId ?? "44hJcni36xHwbcPHtKTa",
-      displayName: user?.nickname ?? "anonymous",
-      userName: user?.nickname ?? "anonymous",
-      emailVerified: user?.email_verified ?? false,
-      avatar: user?.picture ?? "",
+      userId: auth.authId,
+      displayName: auth.authDisplayName,
+      userName: auth.authName,
+      emailVerified: auth.emailVerified,
+      avatar: auth.authAvatarUri,
       type: "tweet",
       public: true,
       content: data.content,
@@ -71,7 +69,7 @@ const TweetBox: VFC = () => {
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           {/* tweet box input */}
           <Box sx={{ display: "flex", px: 20, py: 10 }}>
-            <UserAvatar src={isAuthenticated ? user?.picture : ""} />
+            <UserAvatar src={auth.authAvatarUri} />
             <Input
               {...register("content", { maxLength: 100 })}
               placeholder="What's happening?"
