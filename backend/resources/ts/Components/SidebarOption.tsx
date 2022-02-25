@@ -13,7 +13,6 @@ const styleActive = {
   alignItems: "center",
   m: 10,
   color: "primary.main",
-  cursor: "pointer",
   "&:hover": {
     backgroundColor: "#e8f5fe",
     borderRadius: 30,
@@ -25,7 +24,6 @@ const styleNoActive = {
   display: "flex",
   alignItems: "center",
   m: 10,
-  cursor: "pointer",
   "&:hover": {
     backgroundColor: "#e8f5fe",
     borderRadius: 30,

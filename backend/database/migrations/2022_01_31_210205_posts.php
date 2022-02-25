@@ -30,7 +30,7 @@ class Posts extends Migration
           $table->longText('replayIds')->nullable();
           $table->longText('retweetIds')->nullable();
           $table->longText('likesIds')->nullable();
-          $table->string('replayTo', 40)->nullable();
+          $table->integer('replayTo')->default(0);
           $table->string('retweetBy', 40)->nullable();
           $table->timestamps();
         });

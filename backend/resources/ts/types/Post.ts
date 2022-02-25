@@ -15,7 +15,7 @@ export type Post = {
   replayIds?: string;
   retweetIds?: string;
   likesIds?: string;
-  replayTo?: string;
+  replayTo: number;
   retweetBy?: string;
   authUserId?: string;
   authUserName?: string;
@@ -29,7 +29,7 @@ export type SendPost = {
   userName: string;
   emailVerified: boolean;
   avatar: string;
-  type: "tweet";
+  type: "tweet" | "replay";
   public: boolean;
   content: string;
   image: string;
@@ -39,6 +39,6 @@ export type SendPost = {
   replayIds?: string;
   retweetIds?: string;
   likesIds?: string;
-  replayTo?: string;
+  replayTo: number;
   retweetBy?: string;
 };

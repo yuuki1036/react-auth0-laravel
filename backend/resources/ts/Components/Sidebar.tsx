@@ -1,8 +1,7 @@
 import React, { VFC } from "react";
 import { Box, Typography } from "@mui/material";
 import SidebarOption from "./SidebarOption";
-import Timeline from "@mui/icons-material/Timeline";
-import Public from "@mui/icons-material/Public";
+import Home from "@mui/icons-material/Home";
 import Search from "@mui/icons-material/Search";
 import NotificationsNone from "@mui/icons-material/NotificationsNone";
 import BookmarkBorder from "@mui/icons-material/BookmarkBorder";
@@ -23,11 +22,15 @@ const Sidebar: VFC = () => {
         borderColor: "secondary.main",
       }}
     >
-      <Typography color="primary" fontSize={28} fontWeight="bold">
+      <Typography
+        color="primary"
+        fontSize={28}
+        fontWeight="bold"
+        sx={{ ml: 5 }}
+      >
         HITOKOTO
       </Typography>
-      <SidebarOption Icon={Public} active={true} text="Public" />
-      <SidebarOption Icon={Timeline} text="Timeline" />
+      <SidebarOption Icon={Home} active={true} text="Home" />
       <SidebarOption Icon={Search} text="Explone" />
       <SidebarOption Icon={NotificationsNone} text="Notifications" />
       <SidebarOption Icon={BookmarkBorder} text="Bookmarks" />

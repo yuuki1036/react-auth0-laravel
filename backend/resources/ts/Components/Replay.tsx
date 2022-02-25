@@ -1,4 +1,10 @@
-import React, { useState, VFC } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useState,
+  VFC,
+} from "react";
 import { styled } from "@mui/system";
 import { Box, ModalUnstyled, Typography } from "@mui/material";
 import ChatBubbleOutlineRounded from "@mui/icons-material/ChatBubbleOutlineRounded";
@@ -30,6 +36,13 @@ const Backdrop = styled("div")`
   -webkit-tap-highlight-color: transparent;
 `;
 
+export const ReplayModalContext = createContext(
+  {} as {
+    open: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>>;
+  }
+);
+
 type Props = {
   count: number;
   post: Post;
@@ -38,7 +51,12 @@ type Props = {
 };
 
 const Replay: VFC<Props> = ({ count, post, formatted, auth }) => {
+  // モーダル開閉フラグ
   const [open, setOpen] = useState<boolean>(false);
+  // リプライフラグ
+  const [isReplay, setIsReplay] = useState<boolean>(
+    formatted.replayIds.includes(auth.authId)
+  );
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -62,7 +80,9 @@ const Replay: VFC<Props> = ({ count, post, formatted, auth }) => {
         onClose={handleClose}
         BackdropComponent={Backdrop}
       >
-        <ReplayModal post={post} auth={auth} />
+        <ReplayModalContext.Provider value={{ open, setOpen }}>
+          <ReplayModal post={post} auth={auth} />
+        </ReplayModalContext.Provider>
       </StyledModal>
     </>
   );

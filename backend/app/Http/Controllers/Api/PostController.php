@@ -14,6 +14,7 @@ class PostController extends Controller
     {
         $posts = DB::table('posts')
             ->where('public', '=', true)
+            ->where('type', '!=', 'replay')
             ->latest('created_at')
             ->get();
         return response()->json($posts, 200);
@@ -50,7 +51,7 @@ class PostController extends Controller
         return response()->json("OK", 200);
     }
 
-    // post作成
+    // retweet
     public function retweet(Request $request)
     {
         $post = Post::find($request->id);
@@ -62,11 +63,20 @@ class PostController extends Controller
         $retweet->replayIds = "";
         $retweet->retweetIds = "";
         $retweet->likesIds = "";
-        $retweet->replayTo = "";
+        $retweet->replayTo = 0;
         $retweet->retweetBy = $request->userName;
         $retweet->save();
         // retweet カウントアップ
         $this->updateReTweetUp($request->id, $request->userId);
+        return response()->json("OK", 200);
+    }
+
+    // replay
+    public function replay(Request $request)
+    {
+        Post::create($request->all());
+        // replay カウントアップ
+        $this->updateReplayUp($request->replayTo, $request->userId);
         return response()->json("OK", 200);
     }
 
@@ -99,12 +109,21 @@ class PostController extends Controller
         return response()->json("OK", 200);
     }
 
-    // like を増やす
+    // retweet を増やす
     public function updateReTweetUp($id, $userId)
     {
         $post = Post::find($id);
         $post->retweet += 1;
         $post->retweetIds = $this->addUserId($post->retweetIds, $userId);
+        $post->save();
+    }
+
+    // replay を増やす
+    public function updateReplayUp($id, $userId)
+    {
+        $post = Post::find($id);
+        $post->replay += 1;
+        $post->replayIds = $this->addUserId($post->replayIds, $userId);
         $post->save();
     }
 

@@ -1,9 +1,12 @@
-import React, { forwardRef } from "react";
-import { Box, Typography } from "@mui/material";
+import React, { forwardRef, useContext } from "react";
+import { Box, Typography, IconButton } from "@mui/material";
 import { GuestAvatar, UserAvatar } from "./MyAvatar";
 import { format } from "date-fns";
+import Close from "@mui/icons-material/Close";
 import { Post } from "../types/Post";
 import { Auth } from "../types/Auth";
+import ReplayBox from "./ReplayBox";
+import { ReplayModalContext } from "./Replay";
 
 type Props = {
   post: Post;
@@ -12,6 +15,8 @@ type Props = {
 
 const ReplayModal = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { post, auth } = props;
+  const { open, setOpen } = useContext(ReplayModalContext);
+  const handleClose = () => setOpen(false);
   return (
     <Box
       ref={ref}
@@ -27,16 +32,14 @@ const ReplayModal = forwardRef<HTMLDivElement, Props>((props, ref) => {
       }}
     >
       {/* closebtn */}
-      {/* <Box onClick={handleClose} sx={{ p: 10 }}>
+      <IconButton onClick={handleClose}>
         <Close fontSize="small" />
-      </Box> */}
+      </IconButton>
       <Box
         sx={{
           display: "flex",
           alignItems: "flex-start",
-          borderBottom: 1,
-          borderBottomColor: "secondary.main",
-          pt: 50,
+          mt: 10,
         }}
       >
         {/* avatar */}
@@ -76,6 +79,7 @@ const ReplayModal = forwardRef<HTMLDivElement, Props>((props, ref) => {
           </Box>
         </Box>
       </Box>
+      <ReplayBox post={post} auth={auth} />
     </Box>
   );
 });

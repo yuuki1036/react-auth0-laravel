@@ -33,7 +33,7 @@ class PostFactory extends Factory
         "replayIds" => "",
         "retweetIds" => "",
         "likesIds" => "",
-        "replayTo" => "",
+        "replayTo" => 0,
         "retweetBy" => "",
         "created_at" => $date,
         "updated_at" => $date,

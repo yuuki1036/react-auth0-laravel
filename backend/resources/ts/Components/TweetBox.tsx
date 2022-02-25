@@ -38,7 +38,7 @@ const TweetBox: VFC<Props> = ({ auth }) => {
       replayIds: "",
       retweetIds: "",
       likesIds: "",
-      replayTo: "",
+      replayTo: 0,
     };
     console.log(sendPost);
     axios
