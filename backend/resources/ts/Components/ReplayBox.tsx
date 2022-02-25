@@ -72,6 +72,7 @@ const ReplayBox: VFC<Props> = ({ post, auth }) => {
               {...register("content", { maxLength: 100 })}
               placeholder="Hitokoto your replay"
               disableUnderline={true}
+              autoFocus={true}
               color="info"
               sx={{
                 flex: 1,
